@@ -39,6 +39,10 @@
   gap: 0.4rem;
 }
 
+.cc-security {
+  min-width: 3.9rem;
+}
+
 .cc .label {
   font-size: 1rem;
   line-height: 1.2rem;
@@ -50,6 +54,8 @@
   color: #ffffff;
   text-shadow: 0 0.25rem 0.25rem rgb(22 22 22 / 16%);
   text-transform: uppercase;
+  max-width: 32rem;
+  overflow-wrap: break-word;
 }
 
 .cc-extra {
