@@ -39,9 +39,17 @@
     grid-area: A;
   }
 
-  #app section.cc {
+  #app section.cc-section {
     grid-area: B;
-    align-self: center;
+    align-self: flex-end;
+  }
+
+  #app section.cc-section .all-cc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4.9rem;
+    margin-top: 1.2rem;
   }
 
   #app form {

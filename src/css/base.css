@@ -34,7 +34,7 @@ body {
 #app {
   display: grid;
   justify-content: center;
-  gap: 3.2rem;
+  gap: 2.2rem;
 
   width: 90%;
   max-width: 42rem;
@@ -44,6 +44,12 @@ body {
   background: #202024;
   border: 0.1rem solid #323238;
   border-radius: 0.6rem;
+}
+
+@media (min-width: 780px) {
+  #app {
+    gap: 3.2rem;
+  }
 }
 
 #app header {
