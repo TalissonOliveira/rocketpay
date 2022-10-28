@@ -1,6 +1,14 @@
 import './css/index.css'
 import IMask from 'imask'
 import { cardsDynamicMasks } from './cardsDynamicMasks'
+import { CardProps, getCards, saveCards } from './localStorage'
+import { colors } from './cardsColors'
+
+window.addEventListener("load", () => {
+  clearFormFields()
+})
+
+const cards = getCards()
 
 const ccBgColor01 = document.querySelector('.cc-bg svg > g g:nth-child(1) path')
 const ccBgColor02 = document.querySelector('.cc-bg svg > g g:nth-child(2) path')
@@ -8,12 +16,6 @@ const ccBgColor02 = document.querySelector('.cc-bg svg > g g:nth-child(2) path')
 const ccLogo = document.querySelector('.cc-logo span:nth-child(2) img')
 
 function setCardType(type: 'visa' | 'mastercard' | 'default') {
-  const colors = {
-    visa: ['#436D99', '#2D57F2'],
-    mastercard: ['#C69347', '#DF6F29'],
-    default: ['black', 'gray']
-  }
-
   ccBgColor01?.setAttribute('fill', colors[type][0])
   ccBgColor02?.setAttribute('fill', colors[type][1])
   ccLogo?.setAttribute('src', `/cc-${type}.svg`)
@@ -25,7 +27,7 @@ interface MaskedDynamic extends IMask.MaskedDynamic {
   compiledMasks: (IMask.MaskedDynamic["compiledMasks"][0] & { regex: RegExp, cardtype: string })[]
 }
 
-const cardNumber = document.querySelector('#card-number') as HTMLElement
+const cardNumber = document.querySelector('#card-number') as HTMLInputElement
 const cardNumberPattern = {
   mask: cardsDynamicMasks,
   dispatch: function (appended: string, dynamicMasked: MaskedDynamic) {
@@ -73,7 +75,7 @@ function updateCardHolder(holder: string) {
   }
 }
 
-const expirationDate = document.querySelector('#expiration-date') as HTMLElement
+const expirationDate = document.querySelector('#expiration-date') as HTMLInputElement
 const expirationDatePattern = {
   mask: "MM{/}YY",
   blocks: {
@@ -104,7 +106,7 @@ function updateExpirationDate(date: string) {
   }
 }
 
-const securityCode = document.querySelector('#security-code') as HTMLElement
+const securityCode = document.querySelector('#security-code') as HTMLInputElement
 const securityCodePattern = {
   mask: '0000'
 }
@@ -123,9 +125,46 @@ function updateSecurityCode(code: string) {
   }
 }
 
+function clearFormFields() {
+  cardNumber.value = ''
+  cardHolder.value = ''
+  expirationDate.value = ''
+  securityCode.value = ''
+
+  updateCardNumber('')
+  updateCardHolder('')
+  updateExpirationDate('')
+  updateSecurityCode('')
+  setCardType('default')
+}
+
 const addbutton = document.querySelector<HTMLButtonElement>('#add-card')
-addbutton?.addEventListener('click', (event) => {
-  console.log(event)
+
+addbutton?.addEventListener('click', async () => {
+  const formFields = document.querySelectorAll<HTMLInputElement>('form input')
+
+  for (const field of Array.from(formFields)) {
+    if (field.value.trim() === '') {
+      alert('Preencha todos os campos!')
+      field.focus()
+
+      return
+    }
+  }
+
+  const card: CardProps = {
+    // @ts-ignore
+    type: cardNumberMasked.masked.currentMask?.cardtype,
+    id: String(cardNumberMasked.value) + Math.random(),
+    cardNumber: cardNumberMasked.value,
+    holder: cardHolder.value,
+    expirationDate: expirationDateMasked.value,
+    securityCode: securityCodeMasked.value
+  }
+
+  cards.push(card)
+  saveCards(cards)
+  clearFormFields()
 })
 
 document.querySelector('form')?.addEventListener('submit', (event) => {
