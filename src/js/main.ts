@@ -1,8 +1,8 @@
-import './css/index.css'
+import '../css/index.css'
 import IMask from 'imask'
-import { cardsDynamicMasks } from './cardsDynamicMasks'
-import { CardProps, getCards, saveCards } from './localStorage'
-import { colors } from './cardsColors'
+import { cardsDynamicMasks } from './utils/cardsDynamicMasks'
+import { CardProps, getCards, saveCards } from './utils/localStorage'
+import { colors } from './utils/cardsColors'
 
 window.addEventListener("load", () => {
   clearFormFields()

@@ -1,7 +1,7 @@
-import './css/index.css'
-import './css/cards.css'
-import { getCards, saveCards } from './localStorage'
-import { colors } from './cardsColors'
+import '../css/index.css'
+import '../css/cards.css'
+import { getCards, saveCards } from './utils/localStorage'
+import { colors } from './utils/cardsColors'
 
 const cards = getCards()
 
