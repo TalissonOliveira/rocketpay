@@ -1,9 +1,10 @@
+import "toastify-js/src/toastify.css"
 import '../css/index.css'
 import IMask from 'imask'
+import Toastify from 'toastify-js'
 import { cardsDynamicMasks } from './utils/cardsDynamicMasks'
 import { CardProps, getCards, saveCards } from './utils/localStorage'
 import { colors } from './utils/cardsColors'
-
 window.addEventListener("load", () => {
   clearFormFields()
 })
@@ -145,7 +146,13 @@ addbutton?.addEventListener('click', async () => {
 
   for (const field of Array.from(formFields)) {
     if (field.value.trim() === '') {
-      alert('Preencha todos os campos!')
+      Toastify({
+        text: "Preencha todos os campos!",
+        duration: 3000,
+        className: 'toast',
+        close: true
+      }).showToast();
+
       field.focus()
 
       return
