@@ -1,6 +1,6 @@
 import './css/index.css'
 import './css/cards.css'
-import { getCards } from './localStorage'
+import { getCards, saveCards } from './localStorage'
 import { colors } from './cardsColors'
 
 const cards = getCards()
@@ -138,3 +138,26 @@ cards.forEach((card) => {
   </div>
   `
 })
+
+const removeButtons = document.querySelectorAll<HTMLButtonElement>('.remove-cc')
+
+removeButtons.forEach((button) => {
+  button.onclick = () => {
+    removeCard(button)
+  }
+})
+
+function removeCard(cardButton: HTMLButtonElement) {
+  const cardId = cardButton.parentElement?.getAttribute('data-id')
+  const cardIndex = cards.findIndex(item => item.id === cardId)
+
+  cards.splice(cardIndex, 1)
+  cardButton.parentElement?.remove()
+
+  saveCards(cards)
+
+  if (cards.length === 0) {
+    noCardsDiv.style.display = 'flex'
+    cardsSection.style.display = 'none'
+  }
+}
