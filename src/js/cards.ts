@@ -104,7 +104,7 @@ cards.forEach((card) => {
         </span>
         <span>
           <img
-            src="/cc-default.svg"
+            src="/cc-${card.type}.svg"
             alt="ícone do cartão de crédito selecionado"
           />
         </span>

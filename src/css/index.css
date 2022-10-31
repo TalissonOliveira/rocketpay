@@ -56,3 +56,12 @@
     grid-area: C;
   }
 }
+
+.toastify {
+  background: #9B2C2C;
+  box-shadow: 0px 0px 20px -1px rgba(36, 36, 36, 0.5);
+}
+
+.toast-close {
+  margin-left: .5rem;
+}
